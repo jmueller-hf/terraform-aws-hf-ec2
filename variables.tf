@@ -61,6 +61,6 @@ variable "cost_centers" {
 }
 
 variable "bc_password" {
-  type        = map
+  type        = string
   description = "Global bluecat password"
 }
