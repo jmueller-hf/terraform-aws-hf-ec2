@@ -62,10 +62,10 @@ resource "aws_instance" "instance" {
 }
 
 
-#module "bluecat" {
-#  source  = "app.terraform.io/healthfirst/bluecat/cln"
-#  version = "1.13.0"
-#  hostname = var.instance_name
-#  password = var.bc_password
-#  value    = module.ec2.instance_ip
-#}
+module "bluecat" {
+  source  = "app.terraform.io/healthfirst/bluecat/cln"
+  version = "1.13.0"
+  hostname = var.instance_name
+  password = var.bc_password
+  value    = module.ec2.instance_ip
+}
