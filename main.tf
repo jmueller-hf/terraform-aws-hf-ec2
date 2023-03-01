@@ -66,5 +66,5 @@ module "bluecat" {
   version = "1.13.0"
   hostname = local.instance_name
   password = var.bc_password
-  value    = aws_instance.instance.instance_ip
+  value    = aws_instance.instance.private_ip
 }
