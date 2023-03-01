@@ -59,3 +59,8 @@ variable "cost_centers" {
   type        = map
   description = "Global cost centers"
 }
+
+variable "bc_password" {
+  type        = map
+  description = "Global bluecat password"
+}

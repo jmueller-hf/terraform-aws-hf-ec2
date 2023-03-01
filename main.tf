@@ -1,11 +1,13 @@
 locals {
+  instance_name = format("%s-%02s", local.instance_fmt, random_integer.instance_id.result)
   cost_center = lookup(var.cost_centers, var.cost_center)
   instance_fmt = lower(format("%s%s%s-%s%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", lower(local.cost_center.OU), var.instance_name))
   default_tags = {
     "Environment" = var.environment
-    "Name" = ""
-    "Service Role" = ""
+    "Name"            = local.instance_name
+    "Service Role"    = "EC2 Instance"
   }
+  tags = merge(local.cost_center, local.default_tags)
 }
 
 data "aws_ami" "ami" {
@@ -55,17 +57,14 @@ resource "aws_instance" "instance" {
   user_data              = var.user_data
   iam_instance_profile   = var.instance_profile
   vpc_security_group_ids = [lookup(lookup(var.account_vars, var.environment),var.subnet_type).security_group]
-  tags = {
-    "Name"            = format("%s-%02s", local.instance_fmt, random_integer.instance_id.result)
-    "Service Role"    = "EC2 Instance"
-  }
+  tags = local.tags
 }
 
 
 module "bluecat" {
   source  = "app.terraform.io/healthfirst/bluecat/cln"
   version = "1.13.0"
-  hostname = var.instance_name
+  hostname = local.instance_name
   password = var.bc_password
-  value    = module.ec2.instance_ip
+  value    = aws_instance.instance.instance_ip
 }
