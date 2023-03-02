@@ -1,4 +1,5 @@
 locals {
+  domain = lookup(var.account_vars, var.environment).domain
   instance_name = format("%s-%02s", local.instance_fmt, random_integer.instance_id.result)
   cost_center = lookup(var.cost_centers, var.cost_center)
   instance_fmt = lower(format("%s%s%s-%s%s",lower(substr(var.environment, 0, 1)),var.subnet_type == "DMZ" ? "e": "i","ae1", lower(local.cost_center.OU), var.instance_name))
@@ -62,9 +63,9 @@ resource "aws_instance" "instance" {
 
 
 module "bluecat" {
-  source  = "app.terraform.io/healthfirst/bluecat/cln"
-  version = "1.13.0"
-  hostname = local.instance_name
-  password = var.bc_password
-  value    = aws_instance.instance.private_ip
+  source    = "app.terraform.io/healthfirst/bluecat/cln"
+  version   = "1.14.0"
+  hostname  = local.instance_name
+  ipAddr    = aws_instance.instance.private_ip
+  domain    = local.domain
 }
