@@ -18,7 +18,7 @@ output "instance_fqdn" {
 }
   
 output "bc_objectId" {
-  value = module.bluecat.bc_objectId
+  value = module.bluecat.bc_objectId.ObjectId
 }
 
 output "instance_key_name" {
