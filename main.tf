@@ -64,7 +64,7 @@ resource "aws_instance" "instance" {
 
 module "bluecat" {
   source    = "app.terraform.io/healthfirst/bluecat/cln"
-  version   = "1.14.0"
+  version   = "1.15.0"
   hostname  = local.instance_name
   ipAddr    = aws_instance.instance.private_ip
   domain    = local.domain
