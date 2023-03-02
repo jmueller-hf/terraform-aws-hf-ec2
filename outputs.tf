@@ -1,3 +1,8 @@
+output "instance_name" {
+  value       = local.instance_name
+  description = "The instance name"
+}
+
 output "instance_id" {
   value       = aws_instance.instance.id
   description = "The instance id"
@@ -8,7 +13,15 @@ output "instance_ip" {
   description = "The instance private IPv4 address"
 }
 
-output "instance_name" {
-  value       = local.instance_name
-  description = "The instance name"
+output "instance_fqdn" {
+  value = module.bluecat.fqdn
+}
+  
+output "bc_objectId" {
+  value = module.bluecat.bc_objectId
+}
+
+output "instance_key_name" {
+  value       = aws_instance.instance.key_name
+  description = "The instance key name"
 }
