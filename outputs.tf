@@ -17,10 +17,6 @@ output "instance_fqdn" {
   value = module.bluecat.fqdn
 }
   
-output "bc_objectId" {
-  value = module.bluecat.bc_objectId.ObjectId
-}
-
 output "instance_key_name" {
   value       = aws_instance.instance.key_name
   description = "The instance key name"
